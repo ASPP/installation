@@ -121,6 +121,13 @@
             # For pelita testing
             - xauth
 
+            # In case gnome is weird, the tweak tool may help in adjusting hidden settings
+            - gnome-tweak-tool
+
+            # Optional timers for the status bar (can be helpful for pair-programming)
+            - gnome-shell-pomodoro
+            - gnome-shell-timer
+
       - name: Install distro packages (Fedora)
         dnf:
           name: "{{ packages }}"
