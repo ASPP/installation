@@ -6,7 +6,7 @@
     hosts: all
     tasks:
       - name: Install pip packages (Ubuntu)
-        tags: packages
+        tags: packages2
         when: ansible_distribution == "Ubuntu"
         pip:
           executable: pip3
@@ -17,7 +17,7 @@
             - bokeh
 
       - name: Install pip packages (Ubuntu)
-        tags: packages
+        tags: packages2
         when: ansible_distribution == "Ubuntu"
         pip:
           executable: pip3
@@ -48,11 +48,14 @@
           src: .vim/vimrc
           dest: /home/student/.vimrc
           state: link
+        tags: remote
 
       - name: Install vim plugins
         command: vim +PlugInstall +qall
+        tags: remote
 
       - name: Set up git
+        tags: remote
         copy:
           content: |
             [core]
@@ -66,9 +69,17 @@
           dest: /home/student/.gitconfig
 
       - name: Disable screensaver
+        tags: remote
         command: gsettings set org.gnome.desktop.session idle-delay 0
       - name: Disable screen lock
+        tags: remote
         command: gsettings set org.gnome.desktop.lockdown disable-lock-screen true
+
+      - name: Make ~/.local/bin/ directory
+        file:
+          dest: '/home/student/.local/bin/'
+          state: directory
+        tags: remote
 
       - name: Make python python3
         file:
@@ -83,17 +94,20 @@
           - { src: pip3,       dest: pip }
           - { src: pytest-3,   dest: pytest }
           - { src: ipython3,   dest: ipython }
+        tags: packages2
 
       - name: Install .bashrc (Ubuntu)
         when: ansible_distribution == "Ubuntu"
         copy:
           src: 'files/.bashrc'
           dest: '/home/student/.bashrc'
+        tags: remote
 
       - name: Install .bashrc.d/
         copy:
           src: 'files/bashrc.d/'
           dest: '/home/student/.bashrc.d/'
+        tags: remote
 
       - name: Remove .bash_history
         file:
@@ -107,10 +121,10 @@
           state: absent
         tags: cleanup
 
-      - name: Set input keyboards to us/it/de
+      - name: Set input keyboards to us/fr/de
         dconf:
           key: /org/gnome/desktop/input-sources/sources
-          value: "[('xkb', 'us'), ('xkb', 'it'), ('xkb', 'de')]"
+          value: "[('xkb', 'us'), ('xkb', 'fr'), ('xkb', 'de')]"
           state: present
         tags: remote
 

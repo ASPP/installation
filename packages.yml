@@ -10,12 +10,58 @@
           repo: 'ppa:git-core/ppa'
           state: present
 
-      - name: Install distro packages (Ubuntu)
+      - name: Disable apt autoupdates
+        tags: remote
+        when: ansible_distribution == "Ubuntu"
+        copy:
+          content: |
+             APT::Periodic::Update-Package-Lists "0";
+             APT::Periodic::Unattended-Upgrade "0";
+
+          dest: /etc/apt/apt.conf.d/20auto-upgrades
+
+      - name: Disable apt-daily.timer
+        tags: remote
+        ansible.builtin.systemd:
+          name: apt-daily.timer
+          state: stopped
+          enabled: false
+
+      - name: Disable apt-daily service
+        tags: remote
+        ansible.builtin.systemd:
+          name: apt-daily.service
+          state: stopped
+          enabled: false
+
+      - name: Install essential distro packages (Ubuntu)
         apt:
           name: "{{ packages }}"
           update_cache: yes
           force_apt_get: yes
         tags: packages
+        when: ansible_distribution == "Ubuntu"
+        vars:
+          packages:
+            - git
+            - gitg
+            - gitk
+            - git-doc
+            - git-gui
+            - git-email
+            - tig
+            - emacs
+            - vim
+            - micro
+            - curl
+            - python3-psutil  # for ansible
+
+      - name: Install distro packages (Ubuntu)
+        apt:
+          name: "{{ packages }}"
+          update_cache: yes
+          force_apt_get: yes
+        tags: packages2
         when: ansible_distribution == "Ubuntu"
         vars:
           packages:
@@ -36,16 +82,7 @@
             - graphviz-doc
             - liblz4-tool
             - firefox
-            - git
-            - gitg
-            - gitk
-            - git-doc
-            - git-gui
-            - git-email
-            - tig
             - kcachegrind
-            - emacs
-            - vim
             - gnome-builder
             - gedit
             - gedit-plugins
@@ -53,8 +90,6 @@
             - curl
             - ncdu
             - moreutils
-            - micro
-            - curl
             - cython3
             - debian-archive-keyring
             - gpg
@@ -110,7 +145,6 @@
             - python3-xlrd
             - python3-seaborn
             - python3-venv
-            - python3-psutil
             - cufflinks
             - runsnakerun
             - libopenblas-base
@@ -127,6 +161,19 @@
             # Optional timers for the status bar (can be helpful for pair-programming)
             - gnome-shell-pomodoro
             - gnome-shell-timer
+ 
+      - name: Remove updater packages (Ubuntu)
+        apt:
+          name: "{{ packages }}"
+          update_cache: yes
+          force_apt_get: yes
+          state: absent
+        tags: packages
+        when: ansible_distribution == "Ubuntu"
+        vars:
+          packages:
+            - update-notifier
+            - update-ma
 
       - name: Install distro packages (Fedora)
         dnf:
@@ -246,6 +293,7 @@
             - dbus-tools
 
       - name: Allow password authentication (Fedora)
+        when: ansible_distribution == "Fedora"
         copy:
           content: |
              PasswordAuthentication yes
@@ -274,7 +322,7 @@
           force_apt_get: yes
 
       - name: Install desktop
-        tags: packages
+        tags: packages2
         when: ansible_distribution == "Ubuntu"
         apt:
           name: ubuntu-desktop
@@ -282,21 +330,29 @@
           # policy_rc_d: 101
           force_apt_get: yes
 
+      - stat:
+          path: /usr/bin/atom
+        tags: packages
+        register: atom_exists
       - name: Install atom
         tags: packages
-        when: ansible_distribution == "Ubuntu"
+        when: not atom_exists.stat.exists and ansible_distribution == "Ubuntu"
         apt:
-          deb: https://atom.io/download/deb
+          # deb: https://atom.io/download/deb
+          deb: http://10.5.7.35:8000/deb
           force_apt_get: yes
-          # todo: conditionalize on atom
+        ignore_errors: yes
 
-      - name: Install visualstudio
+      - stat:
+          path: /usr/bin/code
         tags: packages
-        when: ansible_distribution == "Ubuntu"
+        register: code_exists
+      - name: Install visualstudio
+        tags: packages2
+        when: not code_exists.stat.exists and ansible_distribution == "Ubuntu"
         apt:
           deb: https://go.microsoft.com/fwlink/?LinkID=760868
           force_apt_get: yes
-          # todo: conditionalize on code
 
       - name: Set up autologin
         when: ansible_distribution == "Ubuntu"
@@ -328,6 +384,7 @@
           content: |
             LANG=en_US.UTF-8
           dest: /etc/locale.conf
+        tags: remote
 
       - name: Set language to English
         copy:
