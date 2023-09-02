@@ -20,6 +20,6 @@
 
     - name: Enable ssl
       ansible.builtin.systemd:
-        name: chatgpt-guard-ssl.socket
+        name: chatgpt-guard-ssl.service
         state: started
 
