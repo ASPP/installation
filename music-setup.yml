@@ -5,8 +5,8 @@
     tasks:
       - name: Copy music folder
         copy:
-          src: 'files/music'
-          dest: '/home/student/.music'
+          src: 'files/music/'
+          dest: '/home/student/.music/'
         tags: remote
 
       - name: Set up timers
