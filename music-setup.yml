@@ -10,32 +10,30 @@
         tags: remote
 
       - name: Set up timers
-        tags: remote
         copy:
           src: 'files/music/aspp-music-finalcountdown.service'
           dest: '/etc/systemd/system/'
         tags: remote
 
       - name: Set up timers
-        tags: remote
         copy:
           src: 'files/music/aspp-music-finalcountdown.timer'
           dest: '/etc/systemd/system/'
         tags: remote
 
       - name: Set up timers
-        tags: remote
         copy:
           src: 'files/music/aspp-music-pushit.service'
           dest: '/etc/systemd/system/'
         tags: remote
 
       - name: Set up timers
-        tags: remote
         copy:
           src: 'files/music/aspp-music-pushit.timer'
           dest: '/etc/systemd/system/'
         tags: remote
+
+      - command: /usr/bin/systemctl daemon-reload
 
       - name: Enable music
         ansible.builtin.systemd:
