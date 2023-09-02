@@ -34,13 +34,17 @@
         tags: remote
 
       - command: /usr/bin/systemctl daemon-reload
+        tags: remote
 
       - name: Enable music
         ansible.builtin.systemd:
           name: aspp-music-pushit.timer
           state: started
+        tags: remote
 
       - name: Enable music
         ansible.builtin.systemd:
           name: aspp-music-finalcountdown.timer
           state: started
+        tags: remote
+
