@@ -69,6 +69,27 @@
 
           dest: /home/student/.gitconfig
 
+      - name: Make ~/.config/git directory
+        file:
+          dest: '/home/student/.config/git/'
+          state: directory
+        tags: remote
+
+      - name: Set up gitconfig
+        tags: remote
+        copy:
+          content: |
+            # # Global gitignore file
+            
+            # Ignore venv* folders when they are in the top level of the repo.
+            #
+            # I think they typically just called venv but sometimes one might
+            # want to add a Python version suffix.
+            
+            /venv*/
+
+          dest: /home/student/.config/git/ignore
+
       - name: Disable screensaver
         tags: remote
         command: gsettings set org.gnome.desktop.session idle-delay 0
