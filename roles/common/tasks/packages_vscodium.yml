@@ -1,0 +1,20 @@
+---
+- name: Add key for vscodium repository
+  tags: packages, vscodium, graphical-packages
+  ansible.builtin.rpm_key:
+    state: present
+    key: https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/-/raw/master/pub.gpg
+
+- name: Add vscodium repository
+  tags: packages, vscodium, graphical-packages
+  ansible.builtin.yum_repository:
+    name: vscodium
+    description: vscodium
+    baseurl: https://download.vscodium.com/rpms/
+    gpgkey: https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/-/raw/master/pub.gpg
+
+- name: Install vscodium
+  tags: packages, vscodium, graphical-packages
+  ansible.builtin.dnf:
+    name: codium
+ 

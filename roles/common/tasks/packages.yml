@@ -167,6 +167,10 @@
       - google-noto-emoji-color-fonts
 
 - import_tasks: packages_vscode.yml
+  when: has_vscode
+
+- import_tasks: packages_vscodium.yml
+  when: has_vscodium
 
 - name: Install pre-compiled py-spy
   tags: packages

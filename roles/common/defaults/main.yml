@@ -5,3 +5,6 @@
 # echo password | mkpasswd -m yescrypt --stdin
 #         student
 student_password: "$y$j9T$9zvGwkFhHinxNiVUcQqlo.$yeu5cJDJAJSTING.AR8khCpBFlJ.16eGrkfOFuLoBj7"
+has_vscode: False
+has_vscodium: True
+
