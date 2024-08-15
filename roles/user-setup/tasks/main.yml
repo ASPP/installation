@@ -215,6 +215,34 @@
     key: github.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOMqqnkVzrm0SdG6UOoqKLsabgH5C9okWi0dh2l9GKJl
     state: present
 
+- name: Create VSCodium settings folders
+  tags: user-config
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0755"
+    owner: student
+    group: student
+  loop:
+    - /home/student/.config
+    - /home/student/.config/VSCodium
+    - /home/student/.config/VSCodium/User
+
+- name: Add VSCodium default config
+  tags: user-config
+  ansible.builtin.copy:
+    dest: /home/student/.config/VSCodium/User/settings.json
+    content: |
+      {
+        "editor.quickSuggestions": {
+          "other": "off"
+        }
+      }
+    mode: "0755"
+    owner: student
+    group: student
+    force: false
+
 - name: "Work around nagging message ‘allow ssh-askpass to inhibit shortcuts’"
   ansible.builtin.file:
     path: "{{ item }}"
