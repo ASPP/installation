@@ -38,6 +38,7 @@
       - neovim
       - python3-neovim
       - fzf
+      - fd-find
       - htop
       - curl
       - ncdu
