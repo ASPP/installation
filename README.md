@@ -65,3 +65,4 @@ time.
     cd /root/installation
     ansible-playbook -i localhost, --connection local all.yml
 
+If there are problems with logging in, or if a quick status report is needed. The console output is forwarded to tty12. Press (CTRL-)ALT-F12 to get there.
