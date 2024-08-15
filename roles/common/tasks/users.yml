@@ -39,7 +39,7 @@
   tags: user-creation
   copy:
     src: gdm-custom.conf
-    dest: /etc/gdm/
+    dest: /etc/gdm/custom.conf
 
 - name: Create firefox preferences directory
   tags: config
