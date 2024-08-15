@@ -3,7 +3,7 @@
   ansible.builtin.command: xdg-user-dirs-update
   # Creates ~/Desktop, ~/Downloads ... and .config folders
   # Unfortunately not .cache and .local
-  tags: remote
+  tags: user-config
 
 - name: Install pip packages (Fedora)
   tags: user-packages
@@ -29,12 +29,12 @@
     repo: https://github.com/Debilski/vim-basic.git
     dest: /home/student/.config/vim
     update: false
-  tags: remote
+  tags: user-config
   register: vim_config
 
 - name: Install vim plugins
   ansible.builtin.command: 'vim +PlugInstall +qall'
-  tags: remote
+  tags: user-config
   when: vim_config.changed
 
 - name: Kickstart neovim
@@ -42,16 +42,16 @@
     repo: https://github.com/nvim-lua/kickstart.nvim.git
     dest: /home/student/.config/nvim
     update: false
-  tags: remote
+  tags: user-config
   register: nvim_config
 
 - name: Install nvim plugins
   ansible.builtin.command: 'nvim --headless "+Lazy! sync" +qa'
-  tags: remote
+  tags: user-config
   when: nvim_config.changed
 
 - name: Set up git
-  tags: remote
+  tags: user-config
   copy:
     content: |
       [core]
@@ -65,12 +65,12 @@
     dest: /home/student/.gitconfig
 
 - name: Disable screensaver
-  tags: remote
+  tags: user-config
   command: gsettings set org.gnome.desktop.session idle-delay 0
   ignore_errors: true
 
 - name: Disable screen lock
-  tags: remote
+  tags: user-config
   command: gsettings set org.gnome.desktop.lockdown disable-lock-screen true
   ignore_errors: true
 
@@ -78,42 +78,44 @@
   file:
     dest: "/home/student/.local/bin/"
     state: directory
-  tags: remote
+  tags: user-config
 
 - name: Install .bashrc.d/
   copy:
     src: "bashrc.d/"
     dest: "/home/student/.bashrc.d/"
-  tags: remote
+  tags: user-config
 
 - name: Create directory .config/micro
   file:
     path: /home/student/.config/micro/
     state: directory
-  tags: remote
+  tags: user-config
+
 - name: Install .config/micro/settings.json
   copy:
     src: "micro-settings.json"
     dest: "/home/student/.config/micro/settings.json"
-  tags: remote
+  tags: user-config
+
 - name: Install .config/micro/bindings.json
   copy:
     src: "micro-bindings.json"
     dest: "/home/student/.config/micro/bindings.json"
-  tags: remote
+  tags: user-config
 
 - name: Remove .bash_history
   file:
     path: "/home/student/.bash_history"
     state: absent
-  tags: cleanup
+  tags: cleanup, user-config
   when: "'cleanup' in ansible_run_tags"
 
 - name: Remove .ipynb_checkpoints/
   file:
     path: "/home/student/.ipynb_checkpoints/"
     state: absent
-  tags: cleanup
+  tags: cleanup, user-config
   when: "'cleanup' in ansible_run_tags"
 
 - name: Set input keyboards to us/gr
@@ -121,28 +123,28 @@
     key: /org/gnome/desktop/input-sources/sources
     value: "[('xkb', 'us'), ('xkb', 'gr')]"
     state: present
-  tags: remote
+  tags: user-config
 
 - name: Disable lock screen
   dconf:
     key: /org/gnome/desktop/lockdown/disable-lock-screen
     value: "true"
     state: present
-  tags: remote
+  tags: user-config
 
 - name: Disable screen dimming
   dconf:
     key: /org/gnome/settings-daemon/plugins/power/idle-dim
     value: "false"
     state: present
-  tags: remote
+  tags: user-config
 
 - name: Show battery percentage
   dconf:
     key: /org/gnome/desktop/interface/show-battery-percentage
     value: "true"
     state: present
-  tags: remote
+  tags: user-config
 
   # TODO: This should be set once and not override what the user has chosen
 - name: Make Gnome terminal follow the System theme
@@ -150,21 +152,21 @@
     key: /org/gnome/terminal/legacy/theme-variant
     value: "'system'"
     state: present
-  tags: remote
+  tags: user-config
 
 - name: Disable annoying terminal sounds
   dconf:
     key: /org/gnome/desktop/sound/event-sounds
     value: "false"
     state: present
-  tags: remote
+  tags: user-config
 
 - name: Setup favourites
   dconf:
     key: /org/gnome/shell/favorite-apps
     value: "['firefox.desktop', 'org.gnome.Terminal.desktop', 'org.gnome.Nautilus.desktop', 'code.desktop', 'libreoffice-writer.desktop']"
     state: present
-  tags: remote
+  tags: user-config
 
 # Gnome text editor defaults
 - name: Gnome text editor enable line numbers
@@ -172,41 +174,41 @@
     key: /org/gnome/TextEditor
     value: "true"
     state: present
-  tags: remote
+  tags: user-config
 
 - name: Gnome text editor indent with space
   dconf:
     key: /org/gnome/TextEditor
     value: "'space'"
     state: present
-  tags: remote
+  tags: user-config
 
 - name: Gnome text editor tab width 4
   dconf:
     key: /org/gnome/TextEditor
     value: "4"
     state: present
-  tags: remote
+  tags: user-config
 
 - name: Create ~/Desktop
   ansible.builtin.file:
     path: "/home/student/Desktop"
     state: directory
     mode: "0755"
-  tags: remote
+  tags: user-config
 
 - name: Copy background
   copy:
     src: "files/aspp_2024_background.png"
     dest: "/home/student/Desktop/wallpaper.png"
-  tags: remote
+  tags: user-config
 
 - name: Activate background
-  tags: remote
+  tags: user-config
   command: gsettings set org.gnome.desktop.background picture-uri '"file:///home/student/Desktop/wallpaper.png"'
 
 - name: Add github to /home/student/.ssh/known_hosts
-  tags: remote
+  tags: user-config
   ansible.builtin.known_hosts:
     path: /home/student/.ssh/known_hosts
     name: github.com
@@ -220,7 +222,7 @@
     mode: "0755"
     owner: student
     group: student
-  tags: remote
+  tags: user-config
   loop:
     - /home/student/.local
     - /home/student/.local/share
@@ -240,4 +242,4 @@
     mode: "0755"
     owner: student
     group: student
-  tags: remote
+  tags: user-config

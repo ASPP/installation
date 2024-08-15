@@ -1,6 +1,9 @@
 ---
+# Full ASPP laptop setup with enabled+started ansible-pull timers
+
 - name: Basic ASPP laptop setup
   hosts: all
+  tags: stage-basic
 
   roles:
     - role: ansible-pull
@@ -11,6 +14,7 @@
 
 - name: ASPP user setup
   hosts: all
+  tags: stage-user
 
   remote_user: root
   become_user: student
@@ -21,6 +25,7 @@
 
 - name: ASPP bonus setup
   hosts: all
+  tags: stage-bonus
 
   roles:
     - role: music-setup
