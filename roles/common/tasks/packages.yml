@@ -135,7 +135,7 @@
 - name: Install distro packages (Fedora)
   ansible.builtin.dnf:
     name: "{{ packages }}"
-  tags: packages, graphical
+  tags: packages, graphical-packages
   vars:
     packages:
       # Desktop
@@ -168,7 +168,7 @@
 - import_tasks: packages_vscode.yml
 
 - name: Install pre-compiled py-spy
-  tags: remote,packages
+  tags: packages
   ansible.builtin.copy:
     src: files/py-spy
     mode: "0755"
