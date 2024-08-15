@@ -108,8 +108,3 @@
       Wants=keyadder@%N.service
 
 
-- name: Install Wifi connection profile
-  tags: config
-  copy:
-    src: files/FORTH_Guests.nmconnection
-    dest: /etc/NetworkManager/system-connections/

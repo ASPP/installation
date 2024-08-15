@@ -4,3 +4,5 @@
 
   roles:
     - ansible-pull
+    - network
+

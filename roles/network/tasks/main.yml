@@ -1,0 +1,25 @@
+---
+- name: Install NetworkManager packages
+  tags: packages, network
+  ansible.builtin.dnf:
+    name: "{{ item }}"
+  loop:
+  - NetworkManager
+  - NetworkManager-bluetooth
+  - NetworkManager-config-connectivity-fedora
+  - NetworkManager-wifi
+  - nm-connection-editor
+  # If we cannot install these packages then guess what, we might not have any network
+  # Still, we might give it a try to install the network profiles
+  ignore_errors: true
+
+- name: Install Wifi connection profiles
+  tags: config, network
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: /etc/NetworkManager/system-connections/
+    owner: "root"
+    mode: 0600
+  with_fileglob:
+    - "files/nmconnections/*"
+
