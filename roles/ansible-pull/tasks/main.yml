@@ -15,76 +15,33 @@
     state: directory
   tags: config
 
-- name: Install ansible-pull-init.timer
-  copy:
-    dest: /usr/local/lib/systemd/system/ansible-pull-init.timer
-    content: |
-      [Timer]
-      {{ schedule_init }}
-
-      [Install]
-      WantedBy=multi-user.target
+- name: Install ansible-pull timers
+  ansible.builtin.template:
+    dest: "/usr/local/lib/systemd/system/{{ item }}"
+    src: "{{ item }}.j2"
+    owner: root
+    group: root
+    mode: '0644'
   tags: config
+  loop:
+  - ansible-pull-init.timer
+  - ansible-pull-init.service
+  - ansible-pull-repeat.timer
+  - ansible-pull-repeat.service
 
-- name: Install ansible-pull-repeat.timer
-  copy:
-    dest: /usr/local/lib/systemd/system/ansible-pull-repeat.timer
-    content: |
-      [Timer]
-      {{ schedule_repeat }}
-
-      [Install]
-      WantedBy=multi-user.target
-  tags: config
-
-- name: Install ansible-pull-init.service
-  copy:
-    dest: /usr/local/lib/systemd/system/ansible-pull-init.service
-    content: |
-      [Unit]
-      After=multi-user.target graphical.target
-      Wants=network-online.target
-      After=network-online.target
-      Before=ansible-pull.service
-
-      [Service]
-      Type=oneshot
-      ExecStart=ansible-pull -i localhost, -U {{ ansible_repo_url }} {% if pull_tags is defined and pull_tags %} -t {{ pull_tags }} {% endif %} all.yml
-      Restart=on-failure
-      RestartSec=5 min
-  tags: config
-
-- name: Install ansible-pull-repeat.service
-  copy:
-    dest: /usr/local/lib/systemd/system/ansible-pull-repeat.service
-    content: |
-      [Unit]
-      After=multi-user.target graphical.target
-      Wants=network-online.target
-      After=network-online.target
-
-      [Service]
-      Type=oneshot
-      ExecStart=ansible-pull -i localhost, -U {{ ansible_repo_url }} --only-if-changed {% if pull_tags is defined and pull_tags %} -t {{ pull_tags }} {% endif %} all.yml
-      Restart=on-failure
-      RestartSec=1 min
-  tags: config
-
-- name: Create override folder for ansible-pull.service
+- name: Create override folder for ansible-pull-.service
   file:
     path: /usr/local/lib/systemd/system/ansible-pull-.service.d
     state: directory
   tags: config
 
-- name: Add ara config to ansible-pull
-  copy:
-    dest: /usr/local/lib/systemd/system/ansible-pull-.service.d/ara.conf
-    content: |
-      [Service]
-      Environment=ARA_API_SERVER=http://aspp.uber.space:44040
-      Environment=ARA_API_CLIENT=http
-      # This should be set dynamically: python3 -m ara.setup.callback_plugins
-      Environment=ANSIBLE_CALLBACK_PLUGINS=/usr/lib/python3.12/site-packages/ara/plugins/callback
+- name: Add ara config to ansible-pull-
+  ansible.builtin.template:
+    dest: "/usr/local/lib/systemd/system/ansible-pull-.service.d/ara.conf"
+    src: "ara.conf.j2"
+    owner: root
+    group: root
+    mode: '0644'
   tags: config
 
 - name: Enable ansible-pull timers

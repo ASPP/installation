@@ -1,0 +1,8 @@
+[Unit]
+Description=Run full ansible setup
+
+[Timer]
+{{ schedule_init }}
+
+[Install]
+WantedBy=timers.target

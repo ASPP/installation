@@ -1,0 +1,8 @@
+[Unit]
+Description=Run ansible setup after repo change
+
+[Timer]
+{{ schedule_repeat }}
+
+[Install]
+WantedBy=timers.target
