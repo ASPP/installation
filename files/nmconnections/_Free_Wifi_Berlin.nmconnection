@@ -2,7 +2,6 @@
 id=_Free_Wifi_Berlin
 uuid=202906f1-9b6e-4abe-a7d7-f60fc059838c
 type=wifi
-interface-name=wlp0s20f3
 
 [wifi]
 mode=infrastructure
