@@ -161,6 +161,7 @@
       - gedit
       - gedit-plugins
       - rxvt-unicode
+      - geany
 
       # Fonts for the pacman characters on the command line
       - google-noto-*canadian-aboriginal*-fonts
