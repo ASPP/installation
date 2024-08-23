@@ -1,4 +1,6 @@
 #!/bin/bash
+set -e
+set -o pipefail
 
 [ "$1" = "final" ] || exit 0
 
