@@ -1,0 +1,9 @@
+[Unit]
+After=multi-user.target
+
+[Service]
+Type=oneshot
+ExecStart=iw wlp6s0 scan
+
+[Install]
+WantedBy=multi-user.target
