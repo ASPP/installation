@@ -4,8 +4,6 @@ set -o pipefail
 
 [ "$1" = "final" ] || exit 0
 
-sed -r 's/(options.*) rw/\1 ro systemd.mask=systemd-repart.service systemd.mask=systemd-remount-fs.service systemd.unit=multi-user.target/; s/(title.*)Fedora.*/\1 Text boot (installer)/' </efi/loader/entries/* >/efi/loader/entries/installer.conf
-
 if ! [ -d /root/installation ]; then
     git clone https://github.com/ASPP/installation /root/installation
 fi
