@@ -3,7 +3,7 @@
     remote_user: root
     hosts: all
     tasks:
-      - name: Install distro packages (Fedora)
+      - name: Install distro packages
         dnf:
           name: "{{ packages }}"
         tags: packages
@@ -133,7 +133,9 @@
             - alsa-utils
             - python3-systemd
 
-      - name: Install distro packages (Fedora)
+            - wl-kmod
+
+      - name: Install distro packages (graphical)
         dnf:
           name: "{{ packages }}"
         tags: packages, graphical
@@ -150,7 +152,6 @@
             - gnome-shell-extension-workspace-indicator
 
             # Various
-            - inkscape
             - geeqie
             - graphviz
             - graphviz-doc

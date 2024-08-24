@@ -5,7 +5,7 @@
     become: yes
     hosts: all
     tasks:
-      - name: Install pip packages (Fedora)
+      - name: Install pip packages
         tags: user-packages
         pip:
           executable: pip3
