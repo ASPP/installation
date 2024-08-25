@@ -16,7 +16,7 @@
 - name: Install older wpa_supplicant
   command: rpm -U --oldpackage https://kojipkgs.fedoraproject.org//packages/wpa_supplicant/2.10/9.fc39/x86_64/wpa_supplicant-2.10-9.fc39.x86_64.rpm
   register: rpm_cmd
-  failed_when: diff_cmd.rc == 1
+  failed_when: rpm_cmd.rc == 1
 
 - name: Install Wifi connection profiles
   tags: config, network
