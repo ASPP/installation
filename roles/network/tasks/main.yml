@@ -13,6 +13,9 @@
   # Still, we might give it a try to install the network profiles
   ignore_errors: true
 
+- name: Install older wpa_supplicant
+  command: rpm -U --oldpackage https://kojipkgs.fedoraproject.org//packages/wpa_supplicant/2.10/9.fc39/x86_64/wpa_supplicant-2.10-9.fc39.x86_64.rpm
+
 - name: Install Wifi connection profiles
   tags: config, network
   ansible.builtin.copy:
