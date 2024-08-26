@@ -11,6 +11,7 @@
   ansible.builtin.git:
     repo: "{{ repo_url }}"
     dest: /srv/chatgpt-guard
+    force: true
 
 - name: Enable ChatGPT-Guard units
   tags: config
