@@ -158,7 +158,7 @@
 - name: Do nothing when power button is pressed
   dconf:
     key: /org/gnome/settings-daemon/plugins/power/power-button-action
-    value: 'nothing'
+    value: "'nothing'"
     state: present
   tags: user-config
 
