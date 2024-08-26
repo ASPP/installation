@@ -141,6 +141,20 @@
     state: present
   tags: user-config
 
+- name: Set sleep timeout on power
+  dconf:
+    key: /org/gnome/settings-daemon/plugins/power/sleep-inactive-ac-timeout
+    value: 7200
+    state: present
+  tags: user-config
+
+- name: Set sleep timeout on battery
+  dconf:
+    key: /org/gnome/settings-daemon/plugins/power/sleep-inactive-battery-timeout
+    value: 3600
+    state: present
+  tags: user-config
+
 - name: Show battery percentage
   dconf:
     key: /org/gnome/desktop/interface/show-battery-percentage
