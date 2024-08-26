@@ -127,6 +127,18 @@
     state: present
   tags: user-config
 
+- name: Set up keybindings for alt/super-tab
+  tags: user-config
+  dconf:
+    key: "/org/gnome/desktop/wm/keybindings/{{ item.key }}"
+    value: "{{ item.value }}"
+    state: present
+  loop:
+  - { key: "switch-applications", value: "['<Alt>Tab']" }
+  - { key: "switch-applications-backward", value: "['<Shift><Alt>Tab']" }
+  - { key: "switch-windows", value: "['<Super>Tab']" }
+  - { key: "switch-windows-backward", value: "['<Shift><Super>Tab']" }
+
 - name: Disable lock screen
   dconf:
     key: /org/gnome/desktop/lockdown/disable-lock-screen
