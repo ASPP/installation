@@ -133,6 +133,15 @@
       - alsa-utils
       - python3-systemd
 
+- name: Remove python 3.13
+  ansible.builtin.dnf:
+    name: "{{ packages }}"
+    state: absent
+  tags: packages
+  vars:
+    packages:
+    - python3.13
+ 
 - name: Install distro packages (Fedora)
   ansible.builtin.dnf:
     name: "{{ packages }}"
