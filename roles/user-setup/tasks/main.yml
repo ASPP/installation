@@ -235,7 +235,7 @@
 
 - name: Copy background
   copy:
-    src: "files/aspp_2024_background_b.png"
+    src: "files/aspp_2024_background_c.png"
     dest: "/home/student/Desktop/wallpaper.png"
   tags: user-config
 
