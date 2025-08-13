@@ -3,6 +3,5 @@
   hosts: all
 
   roles:
-    - ansible-pull
+    - ansible_pull
     - network
-

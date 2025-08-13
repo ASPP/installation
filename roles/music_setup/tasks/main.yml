@@ -1,0 +1,35 @@
+---
+- name: Copy music folder contents
+  tags: config
+  ansible.builtin.copy:
+    src: "music/"
+    dest: "/home/student/.music/"
+    mode: '0644'
+
+- name: Install music timers and services
+  tags: config
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "/etc/systemd/system/{{ item }}"
+    owner: root
+    group: root
+    mode: '0644'
+  loop:
+    - aspp-music-finalcountdown.service
+    - aspp-music-finalcountdown.timer
+    - aspp-music-pushit.service
+    - aspp-music-pushit.timer
+  notify: Reload systemd
+
+- name: Make sure systemd is reloaded before enabling timers
+  ansible.builtin.meta: flush_handlers
+
+- name: Enable and start music timers
+  tags: config
+  ansible.builtin.systemd_service:
+    name: "{{ item }}"
+    state: started
+    enabled: true
+  loop:
+    - aspp-music-pushit.timer
+    - aspp-music-finalcountdown.timer

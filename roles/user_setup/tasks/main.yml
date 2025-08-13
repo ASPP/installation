@@ -7,9 +7,8 @@
 
 - name: Install pip packages (Fedora)
   tags: user-packages
-  pip:
+  ansible.builtin.pip:
     executable: pip3
-    state: latest
     name:
       - magic-wormhole
       - ipython_memwatcher
@@ -21,7 +20,7 @@
       - snakeviz
       - vega_datasets
       - vega
-      - pelita==2.5.0
+      - pelita
       - memray
 
 - name: Minimal but useful vim config
@@ -30,12 +29,7 @@
     dest: /home/student/.config/vim
     update: false
   tags: user-config
-  register: vim_config
-
-- name: Install vim plugins
-  ansible.builtin.command: 'vim +PlugInstall +qall'
-  tags: user-config
-  when: vim_config.changed
+  notify: Install vim plugins
 
 - name: Kickstart neovim
   ansible.builtin.git:
@@ -43,16 +37,11 @@
     dest: /home/student/.config/nvim
     update: false
   tags: user-config
-  register: nvim_config
-
-- name: Install nvim plugins
-  ansible.builtin.command: 'nvim --headless "+Lazy! sync" +qa'
-  tags: user-config
-  when: nvim_config.changed
+  notify: Install vim plugins
 
 - name: Set up git
   tags: user-config
-  copy:
+  ansible.builtin.copy:
     content: |
       [core]
           editor = micro
@@ -64,64 +53,74 @@
       [credential]
           helper = cache --timeout=1800
 
+    mode: '0644'
     dest: /home/student/.gitconfig
 
 - name: Disable screensaver
+  community.general.dconf:
+    key: /org/gnome/desktop/session/idle-delay
+    value: 0
   tags: user-config
-  command: gsettings set org.gnome.desktop.session idle-delay 0
-  ignore_errors: true
+  # ignore_errors: true
 
 - name: Disable screen lock
+  community.general.dconf:
+    key: /org/gnome/desktop/lockdown/disable-lock-screen
+    value: true
   tags: user-config
-  command: gsettings set org.gnome.desktop.lockdown disable-lock-screen true
-  ignore_errors: true
+  # ignore_errors: true
 
 - name: Make ~/.local/bin/ directory
-  file:
+  ansible.builtin.file:
     dest: "/home/student/.local/bin/"
     state: directory
+    mode: '0755'
   tags: user-config
 
 - name: Install .bashrc.d/
-  copy:
+  ansible.builtin.copy:
     src: "bashrc.d/"
     dest: "/home/student/.bashrc.d/"
+    mode: '0644'
   tags: user-config
 
 - name: Create directory .config/micro
-  file:
+  ansible.builtin.file:
     path: /home/student/.config/micro/
     state: directory
+    mode: '0755'
   tags: user-config
 
 - name: Install .config/micro/settings.json
-  copy:
+  ansible.builtin.copy:
     src: "micro-settings.json"
     dest: "/home/student/.config/micro/settings.json"
+    mode: '0644'
   tags: user-config
 
 - name: Install .config/micro/bindings.json
-  copy:
+  ansible.builtin.copy:
     src: "micro-bindings.json"
     dest: "/home/student/.config/micro/bindings.json"
+    mode: '0644'
   tags: user-config
 
 - name: Remove .bash_history
-  file:
+  ansible.builtin.file:
     path: "/home/student/.bash_history"
     state: absent
   tags: cleanup, user-config
   when: "'cleanup' in ansible_run_tags"
 
 - name: Remove .ipynb_checkpoints/
-  file:
+  ansible.builtin.file:
     path: "/home/student/.ipynb_checkpoints/"
     state: absent
   tags: cleanup, user-config
   when: "'cleanup' in ansible_run_tags"
 
 - name: Set input keyboards to us/gr
-  dconf:
+  community.general.dconf:
     key: /org/gnome/desktop/input-sources/sources
     value: "[('xkb', 'us'), ('xkb', 'gr')]"
     state: present
@@ -129,54 +128,53 @@
 
 - name: Set up keybindings for alt/super-tab
   tags: user-config
-  dconf:
+  community.general.dconf:
     key: "/org/gnome/desktop/wm/keybindings/{{ item.key }}"
     value: "{{ item.value }}"
     state: present
   loop:
-  - { key: "switch-applications", value: "['<Alt>Tab']" }
-  - { key: "switch-applications-backward", value: "['<Shift><Alt>Tab']" }
-  - { key: "switch-windows", value: "['<Super>Tab']" }
-  - { key: "switch-windows-backward", value: "['<Shift><Super>Tab']" }
+    - { key: "switch-applications", value: "['<Alt>Tab']" }
+    - { key: "switch-applications-backward", value: "['<Shift><Alt>Tab']" }
+    - { key: "switch-windows", value: "['<Super>Tab']" }
+    - { key: "switch-windows-backward", value: "['<Shift><Super>Tab']" }
 
 - name: Disable lock screen
-  dconf:
+  community.general.dconf:
     key: /org/gnome/desktop/lockdown/disable-lock-screen
     value: "true"
     state: present
   tags: user-config
 
 - name: Disable screen dimming
-  dconf:
+  community.general.dconf:
     key: /org/gnome/settings-daemon/plugins/power/idle-dim
     value: "false"
     state: present
   tags: user-config
 
 - name: Set sleep timeout on power
-  dconf:
+  community.general.dconf:
     key: /org/gnome/settings-daemon/plugins/power/sleep-inactive-ac-timeout
     value: 7200
     state: present
   tags: user-config
 
 - name: Set sleep timeout on battery
-  dconf:
+  community.general.dconf:
     key: /org/gnome/settings-daemon/plugins/power/sleep-inactive-battery-timeout
     value: 3600
     state: present
   tags: user-config
 
 - name: Do nothing when power button is pressed
-  dconf:
+  community.general.dconf:
     key: /org/gnome/settings-daemon/plugins/power/power-button-action
     value: "'nothing'"
     state: present
   tags: user-config
 
-
 - name: Show battery percentage
-  dconf:
+  community.general.dconf:
     key: /org/gnome/desktop/interface/show-battery-percentage
     value: "true"
     state: present
@@ -184,21 +182,21 @@
 
   # TODO: This should be set once and not override what the user has chosen
 - name: Make Gnome terminal follow the System theme
-  dconf:
+  community.general.dconf:
     key: /org/gnome/terminal/legacy/theme-variant
     value: "'system'"
     state: present
   tags: user-config
 
 - name: Disable annoying terminal sounds
-  dconf:
+  community.general.dconf:
     key: /org/gnome/desktop/sound/event-sounds
     value: "false"
     state: present
   tags: user-config
 
 - name: Setup favourites
-  dconf:
+  community.general.dconf:
     key: /org/gnome/shell/favorite-apps
     value: "['firefox.desktop', 'org.gnome.Terminal.desktop', 'org.gnome.Nautilus.desktop', 'codium.desktop', 'code.desktop', 'org.gnome.TextEditor.desktop', 'geany.desktop', 'libreoffice-writer.desktop']"
     state: present
@@ -206,21 +204,21 @@
 
 # Gnome text editor defaults
 - name: Gnome text editor enable line numbers
-  dconf:
+  community.general.dconf:
     key: /org/gnome/TextEditor
     value: "true"
     state: present
   tags: user-config
 
 - name: Gnome text editor indent with space
-  dconf:
+  community.general.dconf:
     key: /org/gnome/TextEditor
     value: "'space'"
     state: present
   tags: user-config
 
 - name: Gnome text editor tab width 4
-  dconf:
+  community.general.dconf:
     key: /org/gnome/TextEditor
     value: "4"
     state: present
@@ -234,14 +232,17 @@
   tags: user-config
 
 - name: Copy background
-  copy:
+  ansible.builtin.copy:
     src: "files/aspp_2025_background.png"
     dest: "/home/student/Desktop/wallpaper.png"
+    mode: '0644'
   tags: user-config
 
 - name: Activate background
+  community.general.dconf:
+    key: /org/gnome/desktop/background/picture-uri
+    value: '"file:///home/student/Desktop/wallpaper.png"'
   tags: user-config
-  command: gsettings set org.gnome.desktop.background picture-uri '"file:///home/student/Desktop/wallpaper.png"'
 
 - name: Add github to /home/student/.ssh/known_hosts
   tags: user-config

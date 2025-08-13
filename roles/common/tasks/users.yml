@@ -1,16 +1,16 @@
 ---
 - name: Create student user
   tags: user-creation
-  user:
+  ansible.builtin.user:
     name: student
     comment: ASPP Student
     groups: adm, wheel
-    password: "{{ student_password }}"
+    password: "{{ common_student_password }}"
     shell: "/bin/bash"
 
 - name: Set authorized key
   tags: user-creation
-  authorized_key:
+  ansible.posix.authorized_key:
     user: student
     state: present
     key: "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBAEgEXiWzskC+g+5Va0qtiLi3yiT1UL+ENruRwEgX5FnlknJuKE7NM+6LYccG4MKlgjymbQKN02L7g4E/FRJPJk= student@aspp"
@@ -19,45 +19,50 @@
 
 - name: Allow password authentication (Fedora)
   tags: user-creation
-  copy:
+  ansible.builtin.copy:
     content: |
       PasswordAuthentication yes
 
     dest: /etc/ssh/sshd_config.d/80-password-auth.conf
+    mode: "0600"
   notify: Reload sshd config
 
 - name: Allow X forwarding (Fedora)
   tags: user-creation
-  copy:
+  ansible.builtin.copy:
     content: |
       ForwardX11 yes
 
     dest: /etc/ssh/ssh_config.d/80-x-forwarding.conf
+    mode: "0600"
   notify: Reload sshd config
 
 - name: Set up autologin
   tags: user-creation
-  copy:
+  ansible.builtin.copy:
     src: gdm-custom.conf
     dest: /etc/gdm/custom.conf
+    mode: "0644"
 
 - name: Create firefox preferences directory
   tags: config
-  file:
+  ansible.builtin.file:
     path: /usr/lib64/firefox/browser/defaults/preferences/
     state: directory
+    mode: "0755"
 
 - name: Setup firefox homepage
   tags: config
-  copy:
+  ansible.builtin.copy:
     content: |
       pref("browser.startup.homepage", "data:text/plain,browser.startup.homepage=https://aspp.school/wiki/schedule");
 
     dest: /usr/lib64/firefox/browser/defaults/preferences/firefox-aspp.js
+    mode: "0644"
 
 - name: Set timezone to Europe/Athens
   tags: config
-  timezone:
+  community.general.timezone:
     name: Europe/Athens
 
 - name: Add English langpack
@@ -67,20 +72,22 @@
 
 - name: Set language to English
   tags: config
-  copy:
+  ansible.builtin.copy:
     content: |
       LANG=en_US.UTF-8
     dest: /etc/locale.conf
+    mode: "0644"
 
 - name: Create local unit directory
   tags: config
-  file:
+  ansible.builtin.file:
     path: /usr/local/lib/systemd/user/
     state: directory
+    mode: "0755"
 
 - name: Install keyadder service
   tags: config
-  copy:
+  ansible.builtin.copy:
     dest: /usr/local/lib/systemd/user/keyadder@.service
     content: |
       [Unit]
@@ -93,18 +100,21 @@
       Type=oneshot
       RemainAfterExit=true
 
+    mode: "0644"
+
 - name: Create local unit directory
   tags: config
-  file:
+  ansible.builtin.file:
     path: /usr/local/lib/systemd/user/run-media-.mount.d
     state: directory
+    mode: "0755"
 
 - name: Install keyadder service
   tags: config
-  copy:
+  ansible.builtin.copy:
     dest: /usr/local/lib/systemd/user/run-media-.mount.d/keyadder.conf
     content: |
       [Unit]
       Wants=keyadder@%N.service
 
-
+    mode: "0644"

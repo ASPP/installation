@@ -7,6 +7,6 @@ Before=ansible-pull.service
 
 [Service]
 Type=oneshot
-ExecStart=ansible-pull -i localhost, -U {{ ansible_repo_url }} {% if pull_tags is defined and pull_tags %} -t {{ pull_tags }} {% endif %} all.yml
+ExecStart=ansible-pull -i localhost, -U {{ ansible_pull_repo_url }} {% if ansible_pull_tags is defined and ansible_pull_tags %} -t {{ ansible_pull_tags }} {% endif %} all.yml
 Restart=on-failure
 RestartSec=5 min

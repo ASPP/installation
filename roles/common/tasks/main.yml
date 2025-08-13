@@ -1,4 +1,9 @@
 ---
-- import_tasks: packages.yml
-- import_tasks: users.yml
-- import_tasks: services.yml
+- name: Install packages
+  ansible.builtin.import_tasks: packages.yml
+
+- name: Create ASPP user
+  ansible.builtin.import_tasks: users.yml
+
+- name: Start services
+  ansible.builtin.import_tasks: services.yml

@@ -1,0 +1,6 @@
+---
+- name: Reload systemd
+  # Manually reloading and ignoring the errors
+  # That way it will not fail if we are running mkosi shell
+  ansible.builtin.command: systemctl daemon-reload
+  ignore_errors: true

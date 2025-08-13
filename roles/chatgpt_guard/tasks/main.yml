@@ -9,7 +9,7 @@
 - name: Clone ChatGPT-Guard repo
   tags: packages
   ansible.builtin.git:
-    repo: "{{ repo_url }}"
+    repo: "{{ chatgpt_guard_repo_url }}"
     dest: /srv/chatgpt-guard
     force: true
 
@@ -25,7 +25,7 @@
     enabled: true
     state: restarted
     daemon_reload: true
-    
+
 - name: Force-enable chatgpt-ssl
   tags: config
   ansible.builtin.systemd_service:

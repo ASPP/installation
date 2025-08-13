@@ -1,0 +1,8 @@
+---
+- name: Install vim plugins
+  ansible.builtin.command: 'vim +PlugInstall +qall'
+  tags: user-config
+
+- name: Install nvim plugins
+  ansible.builtin.command: 'nvim --headless "+Lazy! sync" +qa'
+  tags: user-config

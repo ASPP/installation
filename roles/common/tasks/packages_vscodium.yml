@@ -17,4 +17,3 @@
   tags: packages, vscodium, graphical-packages
   ansible.builtin.dnf:
     name: codium
- 

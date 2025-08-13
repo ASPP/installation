@@ -4,19 +4,14 @@
   ansible.builtin.dnf:
     name: "{{ item }}"
   loop:
-  - NetworkManager
-  - NetworkManager-bluetooth
-  - NetworkManager-config-connectivity-fedora
-  - NetworkManager-wifi
-  - nm-connection-editor
+    - NetworkManager
+    - NetworkManager-bluetooth
+    - NetworkManager-config-connectivity-fedora
+    - NetworkManager-wifi
+    - nm-connection-editor
   # If we cannot install these packages then guess what, we might not have any network
   # Still, we might give it a try to install the network profiles
   ignore_errors: true
-
-- name: Install older wpa_supplicant
-  command: rpm -U --oldpackage https://kojipkgs.fedoraproject.org//packages/wpa_supplicant/2.10/9.fc39/x86_64/wpa_supplicant-2.10-9.fc39.x86_64.rpm
-  register: rpm_cmd
-  failed_when: rpm_cmd.rc == 1
 
 - name: Install Wifi connection profiles
   tags: config, network
@@ -24,7 +19,6 @@
     src: "{{ item }}"
     dest: /etc/NetworkManager/system-connections/
     owner: "root"
-    mode: 0600
+    mode: '0600'
   with_fileglob:
     - "files/nmconnections/*"
-

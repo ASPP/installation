@@ -104,11 +104,15 @@
       - google-noto-sans-canadian-aboriginal-vf-fonts
       - google-noto-emoji-color-fonts
 
-- import_tasks: packages_vscode.yml
-  when: has_vscode
+# - name: Install ASPP software packages
 
-- import_tasks: packages_vscodium.yml
-  when: has_vscodium
+- name: Install VSCode
+  ansible.builtin.import_tasks: packages_vscode.yml
+  when: common_has_vscode
+
+- name: Install VSCodium
+  ansible.builtin.import_tasks: packages_vscodium.yml
+  when: common_has_vscodium
 
 - name: Install pre-compiled py-spy
   tags: packages

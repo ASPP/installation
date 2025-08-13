@@ -1,10 +1,10 @@
 ---
-schedule_init: |
+ansible_pull_schedule_init: |
   OnBootSec=30 s
   OnUnitInactiveSec=2 h
   RandomizedDelaySec=30 s
 
-schedule_repeat: |
+ansible_pull_schedule_repeat: |
   OnBootSec=10 min
   OnUnitInactiveSec=10 min
   RandomizedDelaySec=30 s

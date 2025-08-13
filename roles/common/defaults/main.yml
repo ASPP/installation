@@ -4,7 +4,6 @@
 #
 # echo password | mkpasswd -m yescrypt --stdin
 #         student
-student_password: "$y$j9T$9zvGwkFhHinxNiVUcQqlo.$yeu5cJDJAJSTING.AR8khCpBFlJ.16eGrkfOFuLoBj7"
-has_vscode: False
-has_vscodium: True
-
+common_student_password: "$y$j9T$9zvGwkFhHinxNiVUcQqlo.$yeu5cJDJAJSTING.AR8khCpBFlJ.16eGrkfOFuLoBj7"
+common_has_vscode: false
+common_has_vscodium: true

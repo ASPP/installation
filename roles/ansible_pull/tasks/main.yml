@@ -5,14 +5,15 @@
 # usual push-based operating mode.
 ---
 - name: Install ansible
-  dnf:
+  ansible.builtin.dnf:
     name: ansible, git, dbus-tools, python3-ara
   tags: packages
 
 - name: Create unit directory
-  file:
+  ansible.builtin.file:
     path: /usr/local/lib/systemd/system/
     state: directory
+    mode: '0755'
   tags: config
 
 - name: Install ansible-pull timers
@@ -24,15 +25,17 @@
     mode: '0644'
   tags: config
   loop:
-  - ansible-pull-init.timer
-  - ansible-pull-init.service
-  - ansible-pull-repeat.timer
-  - ansible-pull-repeat.service
+    - ansible-pull-init.timer
+    - ansible-pull-init.service
+    - ansible-pull-repeat.timer
+    - ansible-pull-repeat.service
+  notify: Reload systemd
 
 - name: Create override folder for ansible-pull-.service
-  file:
+  ansible.builtin.file:
     path: /usr/local/lib/systemd/system/ansible-pull-.service.d
     state: directory
+    mode: '0755'
   tags: config
 
 - name: Add ara config to ansible-pull-
@@ -43,12 +46,10 @@
     group: root
     mode: '0644'
   tags: config
+  notify: Reload systemd
 
-- name: Daemon reload
-  # Manually reloading and ignoring the errors
-  # That way it will not fail if we are running mkosi shell
-  command: systemctl daemon-reload
-  ignore_errors: True
+- name: Make sure systemd is reloaded before enabling timers
+  ansible.builtin.meta: flush_handlers
 
 - name: Enable ansible-pull timers
   tags: config
@@ -56,8 +57,8 @@
     name: "{{ item }}"
     enabled: "{{ ansible_pull_timer_enabled }}"
   loop:
-  - ansible-pull-init.timer
-  - ansible-pull-repeat.timer
+    - ansible-pull-init.timer
+    - ansible-pull-repeat.timer
 
 - name: Start ansible-pull timers
   tags: config
@@ -65,7 +66,6 @@
     name: "{{ item }}"
     state: "started"
   loop:
-  - ansible-pull-init.timer
-  - ansible-pull-repeat.timer
+    - ansible-pull-init.timer
+    - ansible-pull-repeat.timer
   when: ansible_pull_timer_started
-
