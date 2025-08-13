@@ -145,6 +145,13 @@
     state: present
   tags: user-config
 
+- name: Disable automatic screen brightness
+  community.general.dconf:
+    key: /org/gnome/settings-daemon/plugins/power/ambient-enabled
+    value: "false"
+    state: present
+  tags: user-config
+
 - name: Disable screen dimming
   community.general.dconf:
     key: /org/gnome/settings-daemon/plugins/power/idle-dim
