@@ -60,10 +60,10 @@
     dest: /usr/lib64/firefox/browser/defaults/preferences/firefox-aspp.js
     mode: "0644"
 
-- name: Set timezone to Europe/Athens
+- name: Set timezone to Europe/Berlin
   tags: config
   community.general.timezone:
-    name: Europe/Athens
+    name: Europe/Berlin
 
 - name: Add English langpack
   tags: packages
