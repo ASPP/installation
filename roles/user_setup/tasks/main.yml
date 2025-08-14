@@ -202,6 +202,36 @@
     state: present
   tags: user-config
 
+  # Add world clock and weather locations
+  # TODO: This should only be set once and not override user choices
+- name: Add world clocks
+  community.general.dconf:
+    key: /org/gnome/clocks/world-clocks
+    value: "[{'location': <(uint32 2, <('Berlin', 'EDDB', true, [(0.91426163401859872, 0.23591034304566436)], [(0.91658875132345297, 0.23387411976724018)])>)>}, {'location': <(uint32 2, <('Plovdiv', 'LBPD', true, [(0.73536538568917997, 0.43196898986859661)], [(0.73565627971560987, 0.43196898986859661)])>)>}]"
+    state: present
+  tags: user-config
+
+- name: Add world clock locations to shell
+  community.general.dconf:
+    key: /org/gnome/shell/world-clocks/locations
+    value: "[<(uint32 2, <('Berlin', 'EDDB', true, [(0.91426163401859872, 0.23591034304566436)], [(0.91658875132345297, 0.23387411976724018)])>)>, <(uint32 2, <('Plovdiv', 'LBPD', true, [(0.73536538568917997, 0.43196898986859661)], [(0.73565627971560987, 0.43196898986859661)])>)>]"
+    state: present
+  tags: user-config
+
+- name: Add weather
+  community.general.dconf:
+    key: /org/gnome/Weather/locations
+    value: "[<(uint32 2, <('Plovdiv', 'LBPD', false, [(0.73536538568917997, 0.43196898986859661)], @a(dd) [])>)>]"
+    state: present
+  tags: user-config
+
+- name: Add weather to shell
+  community.general.dconf:
+    key: /org/gnome/shell/weather/locations
+    value: "[<(uint32 2, <('Plovdiv', 'LBPD', false, [(0.73536538568917997, 0.43196898986859661)], @a(dd) [])>)>]"
+    state: present
+  tags: user-config
+
 - name: Disable annoying terminal sounds
   community.general.dconf:
     key: /org/gnome/desktop/sound/event-sounds
