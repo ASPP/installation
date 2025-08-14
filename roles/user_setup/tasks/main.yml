@@ -180,6 +180,13 @@
     state: present
   tags: user-config
 
+- name: Set region to Ireland for saner dates and a week that starts with Monday
+  community.general.dconf:
+    key: /system/locale/region
+    value: "'en_IE.UTF-8'"
+    state: present
+  tags: user-config
+
 - name: Show battery percentage
   community.general.dconf:
     key: /org/gnome/desktop/interface/show-battery-percentage
