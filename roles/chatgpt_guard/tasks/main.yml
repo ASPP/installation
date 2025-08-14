@@ -18,7 +18,7 @@
   ansible.builtin.command:
     cmd: /srv/chatgpt-guard/do_setup.sh
 
-- name: Force-enable chatgpt-ssl
+- name: Force-enable chatgpt-guard
   tags: config
   ansible.builtin.systemd_service:
     name: chatgpt-guard.service
