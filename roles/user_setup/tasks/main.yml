@@ -205,7 +205,7 @@
 - name: Setup favourites
   community.general.dconf:
     key: /org/gnome/shell/favorite-apps
-    value: "['firefox.desktop', 'org.gnome.Terminal.desktop', 'org.gnome.Nautilus.desktop', 'codium.desktop', 'code.desktop', 'org.gnome.TextEditor.desktop', 'geany.desktop', 'libreoffice-writer.desktop']"
+    value: "['org.mozilla.firefox.desktop', 'org.gnome.Ptyxis.desktop', 'org.gnome.Nautilus.desktop', 'codium.desktop', 'code.desktop', 'org.gnome.TextEditor.desktop', 'geany.desktop', 'libreoffice-writer.desktop']"
     state: present
   tags: user-config
 
