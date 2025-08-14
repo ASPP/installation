@@ -195,9 +195,9 @@
   tags: user-config
 
   # TODO: This should be set once and not override what the user has chosen
-- name: Make Gnome terminal follow the System theme
+- name: Make Gnome terminal (Ptyxis) follow the System theme
   community.general.dconf:
-    key: /org/gnome/terminal/legacy/theme-variant
+    key: /org/gnome/Ptyxis/interface-style
     value: "'system'"
     state: present
   tags: user-config
