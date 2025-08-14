@@ -79,6 +79,7 @@
     packages:
       # Desktop
       - "@gnome-desktop"
+      - adwaita-fonts-all
       - gnome-shell-extension-appindicator
       - gnome-shell-extension-background-logo
       - gnome-shell-extension-caffeine
