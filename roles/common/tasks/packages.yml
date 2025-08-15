@@ -1,5 +1,5 @@
 ---
-- name: Install distro packages (Fedora)
+- name: Install basic system packages
   ansible.builtin.dnf:
     name: "{{ packages }}"
   tags: packages
@@ -10,29 +10,18 @@
       - plocate
       - zram-generator-defaults
       - diffutils
-      - gcc
-      - g++
-      - make
-      - wget
-      - curl
-      - gdb
-      - strace
-      - ltrace
+      - "@c-development"
+      - meson
       - fpaste
       - rsync
       - man-db
-      - dstat
-      # - gcc-doc
       - openssh-clients
       - openssh-server
-      - lz4
       - git
       - gitg
       - gitk
-      - git-core-doc
       - git-gui
       - tig
-      - gprof2dot
       - emacs
       - vim-enhanced
       - neovim
@@ -41,89 +30,38 @@
       - fd-find
       - htop
       - curl
-      - ncdu
       - micro
-      - meson
+
       - moreutils
-      - curl
-      - python3-Cython
-      - gnupg2
+
+      - python3-cython
+
       - hwloc
       - tmux
       - bash-completion
-      - bind-utils
-      - python3-ara
+
+      - python3-ara # needed for ARA Ansible monitoring
+
+
       - python3-numpy
       - python3-scipy
-      - python3-blosc
       - python3-zmq
       - python3-yaml
       - python3-colorama
       - python3-networkx
       - python3-jupyter-client
       - python3-jupyter-console
-      - python3-jupyter-c-kernel
-      - python3-jupyter-sphinx
       - python3-ipython
       - python3-pytest
-      - python3-dask
-      - python3-dask+array
-      - python3-dask+bag
-      - python3-dask+dataframe
-      - python3-dask+delayed
-      - python3-GitPython
-      - python3-graphviz
-      # - python3-mpltoolkits.basemap
-      - python3-coverage
-      # - python3-line-profiler
-      # - python3-memory-profiler
-      # - python3-bcolz
+
       - python3-pip
-      - python3-plotly
-      - python3-opencv
-      - python3-toolz
-      - python3-joblib
-      - python3-scikit-learn
       - python3-scipy
       - python3-matplotlib
-      # - python3-matplotlib-venn
-      # - python3-willow
-      - python3-pyaudio
-      - python3-pyflakes
-      - python3-sphinx
-      - python3-sphinx_rtd_theme
-      - python3-pudb
       - python3-pytest
-      - python3-flake8
-      - python3-pytest-flakes
-      - python3-pytest-mpi
-      - python3-pytest-cov
-      - python3-mpi4py-mpich
-      - python3-mpi4py-openmpi
-      - python3-imageio
-      - python3-h5py
-      - python3-scikit-image
-      # - python3-tweepy
-      - python3-xlrd
-      - python3-seaborn
-      - python3-psutil
-      # - cufflinks
-      # - runsnakerun
-      # - libopenblas-base: we probably want to pull in all blas implementations
-      #                     and provide instructions how to switch using flexiblas.
+      - python3-uv
       - flexiblas-devel
       - flite
-      # - bloscpack
-
-      - pyinstrument
-
       - python3-pandas
-      - python3-bokeh
-      - python3-pysnooper
-      - python3-ipyparallel
-
-      # For pelita testing
-      - xauth
 
       # For ansible settings
       - dconf
@@ -133,26 +71,7 @@
       - alsa-utils
       - python3-systemd
 
-- name: Remove python 3.13
-  ansible.builtin.dnf:
-    name: "{{ packages }}"
-    state: absent
-  tags: packages
-  vars:
-    packages:
-    - python3.13
-    - python3.13-freethreading
-
-# There should be a way to ensure that python3 == python3.12
-- name: Add python 3.12
-  ansible.builtin.dnf:
-    name: "{{ packages }}"
-  tags: packages
-  vars:
-    packages:
-    - python3.12
- 
-- name: Install distro packages (Fedora)
+- name: Install desktop and supplementary packages
   ansible.builtin.dnf:
     name: "{{ packages }}"
   tags: packages, graphical-packages
@@ -170,20 +89,19 @@
 
       # Various
       - inkscape
-      - geeqie
+      - geeqie # image viewer
       - graphviz
       - graphviz-doc
       - openssh-askpass
       - xclip
       - firefox
-      - kcachegrind
       - gedit
       - gedit-plugins
-      - rxvt-unicode
       - geany
 
       # Fonts for the pacman characters on the command line
-      - google-noto-*canadian-aboriginal*-fonts
+      - google-noto-sans-canadian-aboriginal-fonts
+      - google-noto-sans-canadian-aboriginal-vf-fonts
       - google-noto-emoji-color-fonts
 
 - import_tasks: packages_vscode.yml
