@@ -317,7 +317,8 @@
       {
         "editor.quickSuggestions": {
           "other": "off"
-        }
+        },
+        "editor.inertialScroll": true
       }
     mode: "0755"
     owner: student
