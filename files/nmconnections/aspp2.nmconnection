@@ -13,7 +13,7 @@ ssid=aspp2
 [wifi-security]
 auth-alg=open
 key-mgmt=wpa-psk
-psk=aspp2021
+psk=aspp2025
 
 [ipv4]
 dns-search=
