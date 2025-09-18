@@ -7,3 +7,6 @@
 
 - name: Start services
   ansible.builtin.import_tasks: services.yml
+
+- name: ASPP branding
+  ansible.builtin.import_tasks: branding.yml
