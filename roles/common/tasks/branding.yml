@@ -1,4 +1,10 @@
 ---
+- name: Install plymouth spinner
+  ansible.builtin.dnf:
+    name: plymouth-theme-spinner
+  tags: packages
+  notify: Set default plymouth theme and force initrd rebuild
+
 - name: Copy ASPP logo to plymouth watermark
   ansible.builtin.copy:
     src: "files/aspp_2025.png"
