@@ -290,10 +290,24 @@
     mode: '0644'
   tags: user-config
 
+- name: Copy background (dark)
+  ansible.builtin.copy:
+    src: "files/aspp_2025_background-dark.png"
+    dest: "/home/student/Desktop/wallpaper-dark.png"
+    mode: '0644'
+  tags: user-config
+
 - name: Activate background
   community.general.dconf:
     key: /org/gnome/desktop/background/picture-uri
     value: '"file:///home/student/Desktop/wallpaper.png"'
+    state: present
+  tags: user-config
+
+- name: Activate background (dark)
+  community.general.dconf:
+    key: /org/gnome/desktop/background/picture-uri-dark
+    value: '"file:///home/student/Desktop/wallpaper-dark.png"'
     state: present
   tags: user-config
 
