@@ -376,3 +376,11 @@
     owner: student
     group: student
   tags: user-config
+
+- name: Work around bad scaling for X11 apps
+  community.general.dconf:
+    key: /org/gnome/mutter/experimental-features
+    value: "['scale-monitor-framebuffer']"
+    # was: "['scale-monitor-framebuffer', 'wayland-native-scaling']"
+    state: present
+  tags: user-config
