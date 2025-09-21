@@ -55,7 +55,7 @@
   tags: config
   ansible.builtin.copy:
     content: |
-      pref("browser.startup.homepage", "data:text/plain,browser.startup.homepage=https://aspp.school/wiki/schedule");
+      pref("browser.startup.homepage", "data:text/plain,browser.startup.homepage=https://aspp.school/schedule");
 
     dest: /usr/lib64/firefox/browser/defaults/preferences/firefox-aspp.js
     mode: "0644"
