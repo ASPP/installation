@@ -2,7 +2,7 @@
 Description=Pushit
 
 [Timer]
-OnCalendar=Saturday 17:20
+OnCalendar=Saturday 18:20
 AccuracySec=1us
 
 [Install]
