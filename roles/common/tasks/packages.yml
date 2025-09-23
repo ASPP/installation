@@ -37,6 +37,7 @@
       - python3-cython
 
       - hwloc
+      - lstopo
       - tmux
       - bash-completion
 
