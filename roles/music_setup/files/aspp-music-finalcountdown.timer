@@ -2,9 +2,8 @@
 Description=Pushit
 
 [Timer]
-OnCalendar=Saturday 18:20
+OnCalendar=Saturday 17:50
 AccuracySec=1us
 
 [Install]
 WantedBy=timers.target
-
