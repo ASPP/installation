@@ -20,7 +20,7 @@
       - snakeviz
       - vega_datasets
       - vega
-      - pelita
+      - pelita==2.6.0
       - memray
 
 - name: Minimal but useful vim config
