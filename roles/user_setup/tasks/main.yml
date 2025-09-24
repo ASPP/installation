@@ -384,3 +384,10 @@
     # was: "['scale-monitor-framebuffer', 'wayland-native-scaling']"
     state: present
   tags: user-config
+
+- name: Add maximize/minimize buttons to Gnome 3
+  community.general.dconf:
+    key: /org/gnome/desktop/wm/preferences/button-layout
+    value: '"appmenu:minimize,maximize,close"'
+    state: present
+  tags: user-config
