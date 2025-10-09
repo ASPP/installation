@@ -7,7 +7,7 @@
 
 - name: Copy ASPP logo to plymouth watermark
   ansible.builtin.copy:
-    src: "files/aspp_2025.png"
+    src: "files/ITB_white.png"
     dest: "/usr/share/plymouth/themes/spinner/watermark.png"
     mode: '0644'
     owner: root
