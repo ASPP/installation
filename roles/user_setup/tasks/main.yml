@@ -257,21 +257,21 @@
 # Gnome text editor defaults
 - name: Gnome text editor enable line numbers
   community.general.dconf:
-    key: /org/gnome/TextEditor
+    key: /org/gnome/TextEditor/show-line-numbers
     value: "true"
     state: present
   tags: user-config
 
 - name: Gnome text editor indent with space
   community.general.dconf:
-    key: /org/gnome/TextEditor
+    key: /org/gnome/TextEditor/indent-style
     value: "'space'"
     state: present
   tags: user-config
 
 - name: Gnome text editor tab width 4
   community.general.dconf:
-    key: /org/gnome/TextEditor
+    key: /org/gnome/TextEditor/tab-width
     value: "4"
     state: present
   tags: user-config
