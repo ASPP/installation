@@ -8,6 +8,16 @@
     password: "{{ common_student_password }}"
     shell: "/bin/bash"
 
+- name: Create itbguest user
+  tags: user-creation
+  ansible.builtin.user:
+    name: itbguest
+    comment: itbguest
+    groups: adm, wheel
+    password: "{{ common_itbguest_password }}"
+    shell: "/bin/bash"
+
+
 - name: Set authorized key
   tags: user-creation
   ansible.posix.authorized_key:
