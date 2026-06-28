@@ -116,9 +116,3 @@
   ansible.builtin.import_tasks: packages_vscodium.yml
   when: common_has_vscodium
 
-- name: Install pre-compiled py-spy
-  tags: packages
-  ansible.builtin.copy:
-    src: files/py-spy
-    mode: "0755"
-    dest: /usr/local/bin/

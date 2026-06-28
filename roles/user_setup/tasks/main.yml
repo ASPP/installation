@@ -22,6 +22,7 @@
       - vega
       - pelita==2.6.0
       - memray
+      - py-spy
 
 - name: Minimal but useful vim config
   ansible.builtin.git:
