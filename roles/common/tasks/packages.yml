@@ -86,7 +86,7 @@
       - gnome-shell-extension-caffeine
       - gnome-shell-extension-dash-to-dock
       - gnome-shell-extension-launch-new-instance
-      - gnome-shell-extension-openweather
+#     - gnome-shell-extension-openweather
       - gnome-shell-extension-workspace-indicator
 
       # Various
