@@ -1,6 +1,0 @@
-[Service]
-Type=oneshot
-ExecStart=/usr/lib/systemd/systemd-growfs /
-
-[Install]
-WantedBy=sysinit.target
