@@ -1,14 +1,14 @@
 #!/bin/bash
+set -xeuo pipefail
 
 [ "$1" = "final" ] || exit 0
 
-# sed -r 's/(options.*) rw/\1 ro systemd.mask=systemd-repart.service systemd.mask=systemd-remount-fs.service systemd.unit=multi-user.target/; s/(title.*)Fedora.*/\1 Text boot (installer)/' </efi/loader/entries/* >/efi/loader/entries/installer.conf
+mkosi-chroot git clone --depth 1 https://github.com/ASPP/installation /root/installation
 
-mkosi-chroot git clone https://github.com/ASPP/installation /root/installation
-
-# This does not enable the ansible timers. If this is desired, please uncomment the second playbook command
+# This does not enable the ansible timers. If this is desired, please use the second playbook command or apply manually
 
 mkosi-chroot ansible-playbook -i localhost, --connection local /root/installation/setup-ansible.yml
 
-# mkosi-chroot ansible-playbook -i localhost, --connection local /root/installation/setup-ansible.yml - e ansible_pull_timer_enabled=True
+# mkosi-chroot ansible-playbook -i localhost, --connection local /root/installation/setup-ansible.yml -e ansible_pull_timer_enabled=True
 
+# systemctl --root="$BUILDROOT" enable ansible-pull-init.timer ansible-pull-repeat.timer
