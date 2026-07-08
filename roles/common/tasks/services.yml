@@ -11,13 +11,3 @@
   loop:
     - packagekit.service
     - packagekit-offline-update.service
-    - pmlogger.service
-    - pmlogger_farm.service
-
-# - name: Enable growfs-root.service
-#   tags: config
-#   ansible.builtin.systemd_service:
-#     daemon_reload: true
-#     name: growfs-root.service
-#     masked: false
-#     enabled: true
