@@ -32,6 +32,6 @@
     - role: music_setup
       tags:
         - music-setup
-    - role: chatgpt_guard
+    - role: ai_redirect
       tags:
-        - chatgpt-guard
+        - ai-redirect
