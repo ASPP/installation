@@ -1,12 +1,15 @@
 ---
 
-- name: Install mkcert
+- name: Mkcert | Install binary
   ansible.builtin.dnf:
     name: mkcert
 
-- name: Install mkcert root certificate
-  ansible.builtin.command:
-    cmd: /usr/bin/mkcert -install
+- name: Mkcert | Install certificates
+  ansible.builtin.shell: mkcert -install
+  changed_when: false
+  environment:
+    # we must tell mkcert what its home is
+    CAROOT: /root/.local/share/mkcert
 
 - name: Install python3-systemd
   ansible.builtin.dnf:

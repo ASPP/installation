@@ -17,3 +17,5 @@
         + [ai_redirect_localhost_ip]
         + ai_redirect_hosts
       }}
+  environment:
+    CAROOT: /root/.local/share/mkcert
