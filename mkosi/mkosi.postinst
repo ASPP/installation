@@ -5,10 +5,9 @@ set -xeuo pipefail
 
 mkosi-chroot git clone --depth 1 https://github.com/ASPP/installation /root/installation
 
-# This does not enable the ansible timers. If this is desired, please use the second playbook command or apply manually
+# This does not enable the ansible timers.
+# If this is desired use the second playbook in the VM or run mkosi build --profile enable_timers
 
 mkosi-chroot ansible-playbook -i localhost, --connection local /root/installation/setup-ansible.yml
 
-# mkosi-chroot ansible-playbook -i localhost, --connection local /root/installation/setup-ansible.yml -e ansible_pull_timer_enabled=True
-
-# systemctl --root="$BUILDROOT" enable ansible-pull-init.timer ansible-pull-repeat.timer
+# ansible-playbook -i localhost, --connection local /root/installation/setup-ansible.yml -e ansible_pull_timer_enabled=True

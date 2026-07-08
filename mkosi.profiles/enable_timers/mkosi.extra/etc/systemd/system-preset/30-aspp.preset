@@ -1,0 +1,3 @@
+enable ansible-pull-init.timer
+enable ansible-pull-repeat.timer
+
