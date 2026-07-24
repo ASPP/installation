@@ -5,12 +5,12 @@
   tags: packages
   notify: Set default plymouth theme and force initrd rebuild
 
-- name: Copy ASPP logo to plymouth watermark
-  ansible.builtin.copy:
-    src: "files/ITB_white.png"
-    dest: "/usr/share/plymouth/themes/spinner/watermark.png"
-    mode: '0644'
-    owner: root
-    group: root
-  tags: config
-  notify: Set default plymouth theme and force initrd rebuild
+# - name: Copy ASPP logo to plymouth watermark
+#   ansible.builtin.copy:
+#     src: "files/ITB_white.png"
+#     dest: "/usr/share/plymouth/themes/spinner/watermark.png"
+#     mode: '0644'
+#     owner: root
+#     group: root
+#   tags: config
+#   notify: Set default plymouth theme and force initrd rebuild

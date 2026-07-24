@@ -286,14 +286,14 @@
 
 - name: Copy background
   ansible.builtin.copy:
-    src: "files/aspp_2025_background.png"
+    src: "files/aspp_2026_background.png"
     dest: "/home/student/Desktop/wallpaper.png"
     mode: '0644'
   tags: user-config
 
 - name: Copy background (dark)
   ansible.builtin.copy:
-    src: "files/aspp_2025_background-dark.png"
+    src: "files/aspp_2026_background.png"
     dest: "/home/student/Desktop/wallpaper-dark.png"
     mode: '0644'
   tags: user-config
