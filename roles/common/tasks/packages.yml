@@ -97,6 +97,7 @@
       - openssh-askpass
       - xclip
       - firefox
+      - mozilla-ublock-origin
       - gedit
       - gedit-plugins
       - geany
@@ -115,4 +116,3 @@
 - name: Install VSCodium
   ansible.builtin.import_tasks: packages_vscodium.yml
   when: common_has_vscodium
-

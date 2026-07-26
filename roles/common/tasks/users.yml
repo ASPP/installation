@@ -54,21 +54,47 @@
     dest: /etc/gdm/custom.conf
     mode: "0644"
 
-- name: Create firefox preferences directory
+- name: Remove old firefox adjustments # TODO: Delete
   tags: config
   ansible.builtin.file:
-    path: /usr/lib64/firefox/browser/defaults/preferences/
+    path: /usr/lib64/firefox/browser/defaults/preferences/firefox-aspp.js
+    state: absent
+
+- name: Create firefox policies directory
+  tags: config
+  ansible.builtin.file:
+    path: /etc/firefox/policies
     state: directory
     mode: "0755"
 
-- name: Setup firefox homepage
+- name: Setup firefox policies
   tags: config
   ansible.builtin.copy:
-    content: |
-      pref("browser.startup.homepage", "data:text/plain,browser.startup.homepage=https://aspp.school/schedule");
-
-    dest: /usr/lib64/firefox/browser/defaults/preferences/firefox-aspp.js
+    dest: /etc/firefox/policies/policies.json
     mode: "0644"
+    # ManagedBookmarks is the recommended option but only generates a folder
+    # Bookmarks just sets all bookmarks
+    content: |
+      {
+        "policies": {
+          "Homepage": {
+            "URL": "https://latam.aspp.school/schedule",
+            "Locked": true,
+            "StartPage": "homepage"
+          },
+          "Bookmarks": [
+            {
+              "Title": "ASPP Schedule",
+              "URL": "https://latam.aspp.school/schedule"
+            }
+          ],
+          "NewTabPage": false,
+          "DisplayBookmarksToolbar": "always",
+          "NoDefaultBookmarks": true,
+          "OverrideFirstRunPage": "",
+          "OverrideFirstUpdatePage": ""
+        }
+      }
 
 - name: Set timezone to America/Mexico_City
   tags: config
