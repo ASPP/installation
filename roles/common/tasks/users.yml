@@ -27,11 +27,14 @@
     exclusive: false
   ignore_errors: true
 
-- name: Allow password authentication (Fedora)
+- name: Allow password authentication (Fedora) # Fix logins in Mexico
   tags: user-creation
   ansible.builtin.copy:
     content: |
-      PasswordAuthentication yes
+      PasswordAuthentication no
+
+      Match Address 148.207.*.*
+        PasswordAuthentication yes
 
     dest: /etc/ssh/sshd_config.d/80-password-auth.conf
     mode: "0644"
