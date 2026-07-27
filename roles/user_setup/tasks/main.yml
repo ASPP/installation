@@ -127,6 +127,13 @@
     state: present
   tags: user-config
 
+- name: Unset compose key
+  community.general.dconf:
+    key: /org/gnome/desktop/input-sources/xkb-options
+    value: "[]"
+    state: present
+  tags: user-config
+
 - name: Set up keybindings for alt/super-tab
   tags: user-config
   community.general.dconf:
