@@ -95,7 +95,14 @@
           "DisplayBookmarksToolbar": "always",
           "NoDefaultBookmarks": true,
           "OverrideFirstRunPage": "",
-          "OverrideFirstUpdatePage": ""
+          "OverrideFirstUpdatePage": "",
+          "RequestedLocales": ["en-US"],
+          "AIControls": {
+            "Default": {
+              "Value": "blocked",
+              "Locked": true
+            }
+          }
         }
       }
 
