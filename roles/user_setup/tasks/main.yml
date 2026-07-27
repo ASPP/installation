@@ -123,7 +123,7 @@
 - name: Set input keyboards to us/bg
   community.general.dconf:
     key: /org/gnome/desktop/input-sources/sources
-    value: "[('xkb', 'us'), ('xkb', 'latam')]"
+    value: "[('xkb', 'latam'), ('xkb', 'us')]"
     state: present
   tags: user-config
 
