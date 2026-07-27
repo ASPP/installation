@@ -13,3 +13,10 @@ ai_redirect_hosts:
 - chatgpt.com
 - chat.openai.com
 - auth.openai.com
+- claude.ai
+- askaichat.app
+- meta.ai
+- chat.mistral.ai
+- mistral.ai
+- cursor.com
+- copilot.microsoft.com
