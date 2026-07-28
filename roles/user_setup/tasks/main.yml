@@ -350,12 +350,13 @@
         "editor.quickSuggestions": {
           "other": "off"
         },
-        "editor.inertialScroll": true
+        "editor.inertialScroll": true,
+        "security.workspace.trust.enabled": false
       }
     mode: "0755"
     owner: student
     group: student
-    force: false
+    force: true
 
 - name: Disable VSCodium keyring usage
   tags: user-config
