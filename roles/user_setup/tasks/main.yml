@@ -339,6 +339,7 @@
     - /home/student/.config
     - /home/student/.config/VSCodium
     - /home/student/.config/VSCodium/User
+    - /home/student/.vscode-oss
 
 - name: Add VSCodium default config
   tags: user-config
@@ -355,6 +356,20 @@
     owner: student
     group: student
     force: false
+
+- name: Disable VSCodium keyring usage
+  tags: user-config
+  ansible.builtin.copy:
+    dest: /home/student/.vscode-oss/argv.json
+    content: |
+      {
+        "enable-crash-reporter": false,
+        "password-store":"basic"
+      }
+    mode: "0755"
+    owner: student
+    group: student
+    force: true
 
 - name: "Work around nagging message ‘allow ssh-askpass to inhibit shortcuts’"
   ansible.builtin.file:
