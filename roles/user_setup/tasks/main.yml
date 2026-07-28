@@ -130,7 +130,7 @@
 - name: Unset compose key
   community.general.dconf:
     key: /org/gnome/desktop/input-sources/xkb-options
-    value: "[]"
+    value: "@as []"
     state: present
   tags: user-config
 
