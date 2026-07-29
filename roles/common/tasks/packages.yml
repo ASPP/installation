@@ -13,6 +13,7 @@
       - "@c-development"
       - meson
       - fpaste
+      - jq
       - rsync
       - man-db
       - openssh-clients
