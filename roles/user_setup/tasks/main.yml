@@ -372,6 +372,12 @@
     group: student
     force: true
 
+- name: Remove keyrings to avoid password prompt
+  ansible.builtin.file:
+    path: "/home/student/.local/share/keyrings/"
+    state: absent
+  tags: user-config
+
 - name: "Work around nagging message ‘allow ssh-askpass to inhibit shortcuts’"
   ansible.builtin.file:
     path: "{{ item }}"
