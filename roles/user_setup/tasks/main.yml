@@ -372,6 +372,10 @@
     group: student
     force: true
 
+- name: Install VSCodium Python extension
+  tags: user-config
+  ansible.builtin.command: "codium --install-extension ms-python.python"
+
 - name: Remove keyrings to avoid password prompt
   ansible.builtin.file:
     path: "/home/student/.local/share/keyrings/"
