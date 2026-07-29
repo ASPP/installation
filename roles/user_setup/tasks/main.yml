@@ -20,7 +20,7 @@
       - snakeviz
       - vega_datasets
       - vega
-      - pelita==2.6.0
+      - pelita==2.7.0
       - memray
       - py-spy
 
