@@ -33,9 +33,6 @@
     content: |
       PasswordAuthentication no
 
-      Match Address 148.207.*.*
-        PasswordAuthentication yes
-
     dest: /etc/ssh/sshd_config.d/80-password-auth.conf
     mode: "0644"
   notify: Reload sshd config
