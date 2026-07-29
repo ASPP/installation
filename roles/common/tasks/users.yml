@@ -17,8 +17,7 @@
     password: "{{ common_itbguest_password }}"
     shell: "/bin/bash"
 
-
-- name: Set authorized key
+- name: Set authorized key (user)
   tags: user-creation
   ansible.posix.authorized_key:
     user: student
@@ -27,7 +26,18 @@
     exclusive: false
   ignore_errors: true
 
-- name: Allow password authentication (Fedora) # Fix logins in Mexico
+- name: Set authorized key (admin)
+  tags: user-creation
+  ansible.posix.authorized_key:
+    user: root
+    state: present
+    key: |
+      ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILYII8MhZ/PkwwXgXAOfTEZ6pO+xpE1yZtI+MjWECBYq rike@bling2.local
+      ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBFv+hzK3iufnmnejhOMaqdILbRUiK6J4fwTJMHstehXbq2vJes6IZmceWK47xLnYnOU/qFwX3ah1Ew0yD8AuT3g= zbyszek@krowka
+    exclusive: true
+  ignore_errors: true
+
+- name: Allow password authentication (Fedora)
   tags: user-creation
   ansible.builtin.copy:
     content: |
