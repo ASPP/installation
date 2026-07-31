@@ -429,6 +429,6 @@
 - name: Set extensions
   community.general.dconf:
     key: /org/gnome/shell/enabled-extensions
-    value: "['background-logo@fedorahosted.org', 'workspace-indicator@gnome-shell-extensions.gcampax.github.com', 'window-list@gnome-shell-extensions.gcampax.github.com']"
+    value: "['background-logo@fedorahosted.org', 'launch-new-instance@gnome-shell-extensions.gcampax.github.com', 'workspace-indicator@gnome-shell-extensions.gcampax.github.com', 'window-list@gnome-shell-extensions.gcampax.github.com']"
     state: present
   tags: user-config
