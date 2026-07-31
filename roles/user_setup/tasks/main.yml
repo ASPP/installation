@@ -218,6 +218,13 @@
     state: present
   tags: user-config
 
+- name: Make Gnome terminal (Ptyxis) not show desktop notifications (they show up after a long-running command)
+  community.general.dconf:
+    key: /org/gnome/desktop/notifications/application/org-gnome-ptyxis/enable
+    value: "false"
+    state: present
+  tags: user-config
+
   # Add world clock and weather locations
   # TODO: This should only be set once and not override user choices
 - name: Add world clocks
