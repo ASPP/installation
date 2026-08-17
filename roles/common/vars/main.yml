@@ -1,0 +1,8 @@
+---
+
+common_ssh_keys:
+  student: |
+    ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBAEgEXiWzskC+g+5Va0qtiLi3yiT1UL+ENruRwEgX5FnlknJuKE7NM+6LYccG4MKlgjymbQKN02L7g4E/FRJPJk= student@aspp
+  root: |
+    ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILYII8MhZ/PkwwXgXAOfTEZ6pO+xpE1yZtI+MjWECBYq rike@bling2.local
+    ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBFv+hzK3iufnmnejhOMaqdILbRUiK6J4fwTJMHstehXbq2vJes6IZmceWK47xLnYnOU/qFwX3ah1Ew0yD8AuT3g= zbyszek@krowka

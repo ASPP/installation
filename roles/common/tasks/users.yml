@@ -17,43 +17,23 @@
     password: "{{ common_itbguest_password }}"
     shell: "/bin/bash"
 
-- name: Set authorized key (user)
+- name: ssh | Set authorized keys
   tags: user-creation
   ansible.posix.authorized_key:
-    user: student
+    user: "{{ item.key }}"
     state: present
-    key: "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBAEgEXiWzskC+g+5Va0qtiLi3yiT1UL+ENruRwEgX5FnlknJuKE7NM+6LYccG4MKlgjymbQKN02L7g4E/FRJPJk= student@aspp"
+    key: "{{ item.value }}"
     exclusive: false
   ignore_errors: true
+  loop: "{{ common_ssh_keys | dict2items }}"
 
-- name: Set authorized key (admin)
-  tags: user-creation
-  ansible.posix.authorized_key:
-    user: root
-    state: present
-    key: |
-      ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILYII8MhZ/PkwwXgXAOfTEZ6pO+xpE1yZtI+MjWECBYq rike@bling2.local
-      ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBFv+hzK3iufnmnejhOMaqdILbRUiK6J4fwTJMHstehXbq2vJes6IZmceWK47xLnYnOU/qFwX3ah1Ew0yD8AuT3g= zbyszek@krowka
-    exclusive: true
-  ignore_errors: true
-
-- name: Allow password authentication (Fedora)
+- name: ssh | Disable password logins
   tags: user-creation
   ansible.builtin.copy:
     content: |
       PasswordAuthentication no
 
     dest: /etc/ssh/sshd_config.d/80-password-auth.conf
-    mode: "0644"
-  notify: Reload sshd config
-
-- name: Allow X forwarding (Fedora)
-  tags: user-creation
-  ansible.builtin.copy:
-    content: |
-      ForwardX11 yes
-
-    dest: /etc/ssh/ssh_config.d/80-x-forwarding.conf
     mode: "0644"
   notify: Reload sshd config
 
