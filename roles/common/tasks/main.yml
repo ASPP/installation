@@ -2,6 +2,9 @@
 - name: Install packages
   ansible.builtin.import_tasks: packages.yml
 
+- name: Configure base
+  ansible.builtin.import_tasks: configure.yml
+
 - name: Create ASPP user
   ansible.builtin.import_tasks: users.yml
 

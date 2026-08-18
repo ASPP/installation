@@ -1,0 +1,71 @@
+---
+- name: ssh | Disable password logins
+  tags: user-creation
+  ansible.builtin.copy:
+    content: |
+      PasswordAuthentication no
+
+    dest: /etc/ssh/sshd_config.d/80-password-auth.conf
+    mode: "0644"
+  notify: Reload sshd config
+
+- name: firefox | Create firefox policies directory
+  tags: config
+  ansible.builtin.file:
+    path: /etc/firefox/policies
+    state: directory
+    mode: "0755"
+
+- name: firefox | Setup firefox policies
+  tags: config
+  ansible.builtin.copy:
+    dest: /etc/firefox/policies/policies.json
+    mode: "0644"
+    # ManagedBookmarks is the recommended option but only generates a folder
+    # Bookmarks just sets all bookmarks
+    content: |
+      {
+        "policies": {
+          "Homepage": {
+            "URL": "https://aspp.school/schedule",
+            "Locked": true,
+            "StartPage": "homepage"
+          },
+          "Bookmarks": [
+            {
+              "Title": "ASPP Schedule",
+              "URL": "https://aspp.school/schedule"
+            }
+          ],
+          "NewTabPage": false,
+          "DisplayBookmarksToolbar": "always",
+          "NoDefaultBookmarks": true,
+          "OverrideFirstRunPage": "",
+          "OverrideFirstUpdatePage": "",
+          "RequestedLocales": ["en-US"],
+          "AIControls": {
+            "Default": {
+              "Value": "blocked",
+              "Locked": true
+            }
+          }
+        }
+      }
+
+- name: config | Set timezone to Europe/Prague
+  tags: config
+  community.general.timezone:
+    name: Europe/Prague
+
+- name: Add English langpack
+  tags: packages
+  ansible.builtin.dnf:
+    name: glibc-langpack-en
+
+- name: config | Set language to English
+  tags: config
+  ansible.builtin.copy:
+    content: |
+      LANG=en_US.UTF-8
+    dest: /etc/locale.conf
+    mode: "0644"
