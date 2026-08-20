@@ -23,34 +23,7 @@
     mode: "0644"
     # ManagedBookmarks is the recommended option but only generates a folder
     # Bookmarks just sets all bookmarks
-    content: |
-      {
-        "policies": {
-          "Homepage": {
-            "URL": "https://aspp.school/schedule",
-            "Locked": true,
-            "StartPage": "homepage"
-          },
-          "Bookmarks": [
-            {
-              "Title": "ASPP Schedule",
-              "URL": "https://aspp.school/schedule"
-            }
-          ],
-          "NewTabPage": false,
-          "DisplayBookmarksToolbar": "always",
-          "NoDefaultBookmarks": true,
-          "OverrideFirstRunPage": "",
-          "OverrideFirstUpdatePage": "",
-          "RequestedLocales": ["en-US"],
-          "AIControls": {
-            "Default": {
-              "Value": "blocked",
-              "Locked": true
-            }
-          }
-        }
-      }
+    src: firefox-policies.json
 
 - name: config | Set timezone to Europe/Prague
   tags: config

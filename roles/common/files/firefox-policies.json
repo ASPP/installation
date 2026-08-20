@@ -1,0 +1,39 @@
+{
+  "policies": {
+    "Homepage": {
+      "URL": "https://aspp.school/schedule",
+      "Locked": true,
+      "StartPage": "homepage"
+    },
+    "Bookmarks": [
+      {
+        "Title": "ASPP Schedule",
+        "URL": "https://aspp.school/schedule"
+      }
+    ],
+    "NewTabPage": false,
+    "DisplayBookmarksToolbar": "always",
+    "NoDefaultBookmarks": true,
+    "OverrideFirstRunPage": "",
+    "OverrideFirstUpdatePage": "",
+    "RequestedLocales": ["en-US"],
+    "AIControls": {
+      "Default": {
+        "Value": "blocked",
+        "Locked": true
+      }
+    },
+    "SearchEngines": {
+      "Add": [
+        {
+          "Name": "Clean google",
+          "URLTemplate": "https://www.google.com/search?q={searchTerms}&udm=14",
+          "Method": "GET",
+          "IconURL": "https://www.google.com/favicon.ico",
+          "SuggestURLTemplate": "https://suggestqueries.google.com/complete/search?output=firefox&client=firefox&q={searchTerms}&udm=14"
+        }
+      ],
+      "Default": "Clean google"
+    }
+  }
+}
