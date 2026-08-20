@@ -110,6 +110,23 @@
 
 # - name: Install ASPP software packages
 
+- name: gram editor | Install repo
+  tags: packages, graphical-packages
+  ansible.builtin.yum_repository:
+    name: grameditor
+    description: Gram Editor repo
+    baseurl: https://codeberg.org/api/packages/GramEditor/rpm
+    gpgkey: https://codeberg.org/api/packages/GramEditor/rpm/repository.key
+    gpgcheck: no # docs say check is broken !FIXME
+    enabled: no
+
+- name: gram editor | Install package
+  tags: packages, graphical-packages
+  ansible.builtin.dnf:
+    name: gram
+    enablerepo: grameditor
+    state: present
+
 - name: Install VSCode
   ansible.builtin.import_tasks: packages_vscode.yml
   when: common_has_vscode
