@@ -1,10 +1,15 @@
 [Unit]
 Description=Pushit
+Requires=dbus.socket
+After=dbus.socket
 
 [Service]
-User=student
 Type=oneshot
+ExecStart=/usr/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ 0
+ExecStart=/usr/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 1.0
+ExecStart=/usr/bin/mpv --quiet /home/student/.music/pushit.m4a
+
+User=student
 Environment="XDG_RUNTIME_DIR=/run/user/1000"
 Environment="PULSE_RUNTIME_PATH=/run/user/1000/pulse/"
-ExecStart=/usr/bin/bash -c 'pactl set-sink-mute $(pactl get-default-sink) 0; pactl set-sink-volume $(pactl get-default-sink) "100%"'
-ExecStart=/usr/bin/mpv --quiet /home/student/.music/pushit.m4a
+Environment=DBUS_SESSION_BUS_ADDRESS='unix:path=/run/user/1000/bus'

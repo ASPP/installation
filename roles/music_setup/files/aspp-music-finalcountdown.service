@@ -5,7 +5,8 @@ After=dbus.socket
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/bash -c 'pactl set-sink-mute $(pactl get-default-sink) 0; pactl set-sink-volume $(pactl get-default-sink) "100%"'
+ExecStart=/usr/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ 0
+ExecStart=/usr/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 1.0
 ExecStart=/usr/bin/mpv --quiet /home/student/.music/finalcountdown.m4a
 
 User=student
