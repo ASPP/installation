@@ -8,3 +8,5 @@ common_student_password: "$y$j9T$9zvGwkFhHinxNiVUcQqlo.$yeu5cJDJAJSTING.AR8khCpB
 common_itbguest_password: "$y$j9T$K9P3UjgNmL9H9Lvmc3q601$Jv8CGSkJya6wkXkbHYCxBd39c9O1THUn4ugpG1lnaY3"
 common_has_vscode: false
 common_has_vscodium: true
+
+common_timezone: Europe/Berlin

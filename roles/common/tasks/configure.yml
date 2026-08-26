@@ -25,10 +25,10 @@
     # Bookmarks just sets all bookmarks
     src: firefox-policies.json
 
-- name: config | Set timezone to Europe/Prague
+- name: config | Set timezone
   tags: config
   community.general.timezone:
-    name: Europe/Prague
+    name: "{{ common_timezone }}"
 
 - name: Add English langpack
   tags: packages

@@ -120,10 +120,10 @@
   tags: cleanup, user-config
   when: "'cleanup' in ansible_run_tags"
 
-- name: Set input keyboards to us/bg
+- name: Set input keyboards to us
   community.general.dconf:
     key: /org/gnome/desktop/input-sources/sources
-    value: "[('xkb', 'latam'), ('xkb', 'us')]"
+    value: "[('xkb', 'us')]"
     state: present
   tags: user-config
 
