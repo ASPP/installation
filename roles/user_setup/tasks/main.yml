@@ -358,7 +358,8 @@
           "other": "off"
         },
         "editor.inertialScroll": true,
-        "security.workspace.trust.enabled": false
+        "security.workspace.trust.enabled": false,
+        "workbench.colorTheme": "Light 2026"
       }
     mode: "0755"
     owner: student
