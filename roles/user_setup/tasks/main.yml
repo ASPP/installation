@@ -418,6 +418,11 @@
     group: student
   tags: user-config
 
+- name: set flatpak permissions for ssh-askpass
+  ansible.builtin.command: flatpak permission-set gnome shortcuts-inhibitor gnome-ssh-askpass.desktop DENIED
+  # TODO: This should only run when needed
+  tags: user-config
+
 - name: Work around bad scaling for X11 apps
   community.general.dconf:
     key: /org/gnome/mutter/experimental-features
