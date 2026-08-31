@@ -65,6 +65,8 @@
       - flite
       - python3-pandas
 
+      - python3-GitPython
+
       # For ansible settings
       - dconf
       - dbus-daemon
