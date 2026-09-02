@@ -42,3 +42,10 @@
       LANG=en_US.UTF-8
     dest: /etc/locale.conf
     mode: "0644"
+
+- name: Add avahi ssh configuration
+  tags: config
+  ansible.builtin.copy:
+    src: /usr/share/doc/avahi/ssh.service
+    dest: /etc/avahi/services/ssh.service
+    remote_src: yes
