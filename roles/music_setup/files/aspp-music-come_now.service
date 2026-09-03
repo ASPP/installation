@@ -1,0 +1,15 @@
+[Unit]
+Description=come_now
+Requires=dbus.socket
+After=dbus.socket
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ 0
+ExecStart=/usr/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 1.0
+ExecStart=/usr/bin/mpv --quiet /home/student/.music/come_now.m4a
+
+User=student
+Environment="XDG_RUNTIME_DIR=/run/user/1000"
+Environment="PULSE_RUNTIME_PATH=/run/user/1000/pulse/"
+Environment=DBUS_SESSION_BUS_ADDRESS='unix:path=/run/user/1000/bus'

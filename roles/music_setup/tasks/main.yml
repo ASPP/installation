@@ -19,6 +19,8 @@
     - aspp-music-finalcountdown.timer
     - aspp-music-pushit.service
     - aspp-music-pushit.timer
+    - aspp-music-come_now.service
+    - aspp-music-come_now.timer
   notify: Reload systemd
 
 - name: Make sure systemd is reloaded before enabling timers
@@ -33,3 +35,4 @@
   loop:
     - aspp-music-pushit.timer
     - aspp-music-finalcountdown.timer
+    - aspp-music-come_now.timer

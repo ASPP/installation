@@ -1,0 +1,9 @@
+[Unit]
+Description=come_now
+
+[Timer]
+OnCalendar=Thursday 18:47
+AccuracySec=1us
+
+[Install]
+WantedBy=timers.target
