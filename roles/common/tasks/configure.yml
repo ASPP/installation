@@ -49,3 +49,16 @@
     src: /usr/share/doc/avahi/ssh.service
     dest: /etc/avahi/services/ssh.service
     remote_src: yes
+
+- name: firewall | add local network to internal zone
+  # TODO: Change for every location
+  ansible.posix.firewalld:
+    source: 10.9.6.0/22
+    permanent: true
+    state: enabled
+
+- name: firewall | permit pelita port in internal zone
+  ansible.posix.firewalld:
+    port: 41736/tcp
+    permanent: true
+    state: enabled
